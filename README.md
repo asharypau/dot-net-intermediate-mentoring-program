@@ -1,1 +1,1 @@
-# dot-net-intermediate-mentoring-program-
+# dot-net-intermediate-mentoring-program
