@@ -42,6 +42,6 @@ internal static class Program
             },
             TaskContinuationOptions.ExecuteSynchronously);
 
-        Console.ReadLine();
+        task.Wait();
     }
 }

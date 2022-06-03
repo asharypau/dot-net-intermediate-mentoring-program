@@ -12,7 +12,7 @@ internal static class Program
     private static void Main(string[] args)
     {
         var shared = new Shared();
-        Task.Factory.StartNew(
+        var task = Task.Factory.StartNew(
             () =>
             {
                 for (var i = 0; i < 10; i++)
@@ -31,6 +31,6 @@ internal static class Program
                     TaskCreationOptions.AttachedToParent);
             });
 
-        Console.ReadLine();
+        task.Wait();
     }
 }

@@ -62,6 +62,6 @@ internal static class Program
                 return average;
             });
 
-        Console.ReadLine();
+        Task.WaitAll(task1, task2, task3);
     }
 }
