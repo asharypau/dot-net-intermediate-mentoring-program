@@ -9,37 +9,36 @@
 using MultiThreading.Task3.MatrixMultiplier.Matrices;
 using MultiThreading.Task3.MatrixMultiplier.Multipliers;
 
-namespace MultiThreading.Task3.MatrixMultiplier
+namespace MultiThreading.Task3.MatrixMultiplier;
+
+internal static class Program
 {
-    internal static class Program
+    private static void Main(string[] args)
     {
-        private static void Main(string[] args)
-        {
-            Console.WriteLine("3.	Write a program, which multiplies two matrices and uses class Parallel. ");
-            Console.WriteLine();
+        Console.WriteLine("3.	Write a program, which multiplies two matrices and uses class Parallel. ");
+        Console.WriteLine();
 
-            const byte matrixSize = 7; // todo: use any number you like
-            CreateAndProcessMatrices(matrixSize);
+        const byte matrixSize = 7; // todo: use any number you like
+        CreateAndProcessMatrices(matrixSize);
 
-            Console.ReadLine();
-        }
+        Console.ReadLine();
+    }
 
-        private static void CreateAndProcessMatrices(byte sizeOfMatrix)
-        {
-            Console.WriteLine("Multiplying...");
-            var firstMatrix = new Matrix(sizeOfMatrix, sizeOfMatrix);
-            var secondMatrix = new Matrix(sizeOfMatrix, sizeOfMatrix);
+    private static void CreateAndProcessMatrices(byte sizeOfMatrix)
+    {
+        Console.WriteLine("Multiplying...");
+        var firstMatrix = new Matrix(sizeOfMatrix, sizeOfMatrix);
+        var secondMatrix = new Matrix(sizeOfMatrix, sizeOfMatrix);
 
-            var resultMatrix = new MatricesMultiplier().Multiply(firstMatrix, secondMatrix);
+        var resultMatrix = new MatricesMultiplier().Multiply(firstMatrix, secondMatrix);
 
-            Console.WriteLine("firstMatrix:");
-            firstMatrix.Print();
+        Console.WriteLine("firstMatrix:");
+        firstMatrix.Print();
 
-            Console.WriteLine("secondMatrix:");
-            secondMatrix.Print();
+        Console.WriteLine("secondMatrix:");
+        secondMatrix.Print();
 
-            Console.WriteLine("resultMatrix:");
-            resultMatrix.Print();
-        }
+        Console.WriteLine("resultMatrix:");
+        resultMatrix.Print();
     }
 }
