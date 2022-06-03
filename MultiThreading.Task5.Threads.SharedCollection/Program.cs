@@ -9,15 +9,17 @@ namespace MultiThreading.Task5.Threads.SharedCollection;
 
 internal static class Program
 {
+    private static readonly IDictionary<int, string> Persons = new Dictionary<int, string>();
+    private static readonly ReaderWriterLockSlim ReaderWriterLockSlim = new ReaderWriterLockSlim();
+
     private static void Main(string[] args)
     {
-        var shared = new Shared();
         var task = Task.Factory.StartNew(
             () =>
             {
                 for (var i = 0; i < 10; i++)
                 {
-                    shared.Add(i);
+                    Write(i, "name" + i);
                 }
 
                 Task.Factory.StartNew(
@@ -25,12 +27,26 @@ internal static class Program
                     {
                         for (var i = 0; i < 10; i++)
                         {
-                            shared.Print(i);
+                            Read(i);
                         }
                     },
                     TaskCreationOptions.AttachedToParent);
             });
 
         task.Wait();
+    }
+
+    private static void Write(int id, string value)
+    {
+        ReaderWriterLockSlim.EnterWriteLock();
+        Persons.Add(id, value);
+        ReaderWriterLockSlim.ExitWriteLock();
+    }
+
+    private static void Read(int value)
+    {
+        ReaderWriterLockSlim.EnterReadLock();
+        Console.WriteLine(Persons[value]);
+        ReaderWriterLockSlim.ExitReadLock();
     }
 }
