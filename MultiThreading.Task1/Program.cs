@@ -20,29 +20,19 @@ internal static class Program
 
     private static void HundredTasks()
     {
-        var tasks = new List<Task>();
-
         Parallel.For(
             0,
             TaskAmount,
             i =>
             {
-                var task = CreateTask(i);
-                task.Start();
-
-                tasks.Add(task);
-            });
-    }
-
-    private static Task CreateTask(int taskNumber)
-    {
-        return new Task(
-            () =>
-            {
-                for (var j = 0; j < MaxIterationsCount; j++)
-                {
-                    Output(taskNumber, j);
-                }
+                Task.Run(
+                    () =>
+                    {
+                        for (var j = 0; j < MaxIterationsCount; j++)
+                        {
+                            Output(i, j);
+                        }
+                    });
             });
     }
 
