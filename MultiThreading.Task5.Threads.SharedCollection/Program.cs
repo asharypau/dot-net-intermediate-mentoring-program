@@ -12,7 +12,7 @@ internal static class Program
     private static void Main(string[] args)
     {
         var shared = new Shared();
-        var task = Task.Factory.StartNew(
+        Task.Factory.StartNew(
             () =>
             {
                 for (var i = 0; i < 10; i++)
