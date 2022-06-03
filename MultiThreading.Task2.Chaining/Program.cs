@@ -6,63 +6,62 @@
  * Fourth Task – calculates the average value. All this tasks should print the values to console.
  */
 
-namespace MultiThreading.Task2.Chaining
+namespace MultiThreading.Task2.Chaining;
+
+internal static class Program
 {
-    internal static class Program
+    private static void Main(string[] args)
     {
-        private static void Main(string[] args)
-        {
-            var random = new Random();
+        var random = new Random();
 
-            var task1 = Task.Run(
-                () =>
+        var task1 = Task.Run(
+            () =>
+            {
+                var collection = new List<int>();
+                for (var i = 0; i < 10; i++)
                 {
-                    var collection = new List<int>();
-                    for (var i = 0; i < 10; i++)
-                    {
-                        collection.Add(random.Next(0, 10000));
-                    }
+                    collection.Add(random.Next(0, 10000));
+                }
 
-                    Console.WriteLine("Task1:");
-                    collection.ForEach(Console.WriteLine);
+                Console.WriteLine("Task1:");
+                collection.ForEach(Console.WriteLine);
 
-                    return collection;
-                });
+                return collection;
+            });
 
-            var task2 = task1.ContinueWith(
-                task =>
-                {
-                    var collection = task.Result.Select(item => item * random.Next(0, 1000)).ToList();
+        var task2 = task1.ContinueWith(
+            task =>
+            {
+                var collection = task.Result.Select(item => item * random.Next(0, 1000)).ToList();
 
-                    Console.WriteLine("Task2:");
-                    collection.ForEach(Console.WriteLine);
+                Console.WriteLine("Task2:");
+                collection.ForEach(Console.WriteLine);
 
-                    return collection;
-                });
+                return collection;
+            });
 
-            var task3 = task2.ContinueWith(
-                task =>
-                {
-                    var sortedCollection = task.Result.OrderBy(i => i).ToList();
+        var task3 = task2.ContinueWith(
+            task =>
+            {
+                var sortedCollection = task.Result.OrderBy(i => i).ToList();
 
-                    Console.WriteLine("Task3:");
-                    sortedCollection.ForEach(Console.WriteLine);
+                Console.WriteLine("Task3:");
+                sortedCollection.ForEach(Console.WriteLine);
 
-                    return sortedCollection;
-                });
+                return sortedCollection;
+            });
 
-            task3.ContinueWith(
-                task =>
-                {
-                    var average = task.Result.Average();
+        task3.ContinueWith(
+            task =>
+            {
+                var average = task.Result.Average();
 
-                    Console.WriteLine("Task4:");
-                    Console.WriteLine(average);
+                Console.WriteLine("Task4:");
+                Console.WriteLine(average);
 
-                    return average;
-                });
+                return average;
+            });
 
-            Console.ReadLine();
-        }
+        Console.ReadLine();
     }
 }
