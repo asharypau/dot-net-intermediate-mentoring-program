@@ -13,7 +13,7 @@ namespace MultiThreading.Task4.Threads.Join;
 
 internal static class Program
 {
-    private static readonly Semaphore Semaphore = new Semaphore(1, 1);
+    private static readonly Semaphore Semaphore = new (1, 1);
 
     private static void Main(string[] args)
     {

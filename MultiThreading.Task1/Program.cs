@@ -10,6 +10,7 @@ internal static class Program
 {
     private const int TaskAmount = 100;
     private const int MaxIterationsCount = 1000;
+    private const int FromInclusive = 0;
 
     private static void Main(string[] args)
     {
@@ -21,7 +22,7 @@ internal static class Program
     private static void HundredTasks()
     {
         Parallel.For(
-            0,
+            FromInclusive,
             TaskAmount,
             i =>
             {

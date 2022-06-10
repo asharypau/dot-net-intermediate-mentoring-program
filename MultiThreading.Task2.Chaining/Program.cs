@@ -10,17 +10,17 @@ namespace MultiThreading.Task2.Chaining;
 
 internal static class Program
 {
+    private static readonly Random Random = new ();
+
     private static void Main(string[] args)
     {
-        var random = new Random();
-
         var task1 = Task.Run(
             () =>
             {
                 var collection = new List<int>();
                 for (var i = 0; i < 10; i++)
                 {
-                    collection.Add(random.Next(0, 10000));
+                    collection.Add(GetRandomNumber(0, 10000));
                 }
 
                 Console.WriteLine("Task1:");
@@ -32,7 +32,7 @@ internal static class Program
         var task2 = task1.ContinueWith(
             task =>
             {
-                var collection = task.Result.Select(item => item * random.Next(0, 1000)).ToList();
+                var collection = task.Result.Select(item => item * GetRandomNumber(0, 1000)).ToList();
 
                 Console.WriteLine("Task2:");
                 collection.ForEach(Console.WriteLine);
@@ -43,12 +43,12 @@ internal static class Program
         var task3 = task2.ContinueWith(
             task =>
             {
-                var sortedCollection = task.Result.OrderBy(i => i).ToList();
+                task.Result.Sort();
 
                 Console.WriteLine("Task3:");
-                sortedCollection.ForEach(Console.WriteLine);
+                task.Result.ForEach(Console.WriteLine);
 
-                return sortedCollection;
+                return task.Result;
             });
 
         task3.ContinueWith(
@@ -63,5 +63,10 @@ internal static class Program
             });
 
         Task.WaitAll(task1, task2, task3);
+    }
+
+    private static int GetRandomNumber(int minValue, int maxValue)
+    {
+        return Random.Next(minValue, maxValue);
     }
 }

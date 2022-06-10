@@ -9,6 +9,8 @@ namespace MultiThreading.Task5.Threads.SharedCollection;
 
 internal static class Program
 {
+    private const int MaxIterationsCount = 1000;
+
     private static readonly IDictionary<int, string> Persons = new Dictionary<int, string>();
     private static readonly ReaderWriterLockSlim ReaderWriterLockSlim = new ReaderWriterLockSlim();
 
@@ -17,7 +19,7 @@ internal static class Program
         var task = Task.Factory.StartNew(
             () =>
             {
-                for (var i = 0; i < 10; i++)
+                for (var i = 0; i < MaxIterationsCount; i++)
                 {
                     Write(i, "name" + i);
                 }
